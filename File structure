@@ -1,0 +1,19 @@
+rag-chatbot-newjoiners/
+├── app/
+│   ├── __init__.py
+│   ├── ingest.py              # Loads and chunks data
+│   ├── embed.py               # Embeds text using OpenAI
+│   ├── vector_store.py        # Stores embeddings in FAISS
+│   ├── query.py               # Handles user queries
+│   └── app.py                 # Gradio UI (optional CLI)
+│
+├── data/                      # Place your PDFs or docs here
+│   └── hr_policies.pdf
+│
+├── notebooks/
+│   └── test_pipeline.ipynb    # Test and debug code here
+│
+├── .gitignore                 # Ignore virtual envs, etc.
+├── README.md                  # Project overview and usage
+├── requirements.txt           # List of required Python packages
+└── rag_architecture.png       # Diagram (optional)

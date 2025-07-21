@@ -28,7 +28,7 @@ else:
     print("⚠️ FAISS index not found. Creating from PDF...")
 
     # ✅ List your pre-uploaded PDFs
-    datar = ["admin_guide.pdf", "hr_policies.pdf", "it_help_manual.pdf", "server_issues_guide.pdf"]
+    datar = ["admin_guide1.pdf", "hr_policies.pdf", "it_help_manual.pdf", "server_issues_guide.pdf"]
 
     docs = []
     for pdf in datar:

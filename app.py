@@ -27,22 +27,22 @@ if os.path.exists(os.path.join(INDEX_DIR, "index.faiss")):
 else:
     print("⚠️ FAISS index not found. Creating from PDF...")
 
-    # ✅ List your pre-uploaded PDFs
-    datar = ["admin_guide1.pdf", "hr_policies.pdf", "it_help_manual.pdf", "server_issues_guide.pdf"]
+# ✅ List your pre-uploaded PDFs
+datar = ["admin_guide1.pdf", "hr_policies.pdf", "it_help_manual.pdf", "server_issues_guide.pdf"]
 
-    docs = []
-    for pdf in datar:
-        loader = PyPDFLoader(pdf)
-        pages = loader.load()
-        docs.extend(pages)
+docs = []
+for pdf in datar:
+    loader = PyPDFLoader(pdf)
+    pages = loader.load()
+    docs.extend(pages)
 
-    # ✅ Chunk the documents
-    splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    chunks = splitter.split_documents(docs)
+# ✅ Chunk the documents
+splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+chunks = splitter.split_documents(docs)
 
-    # ✅ Embed and save the FAISS index
-    db = FAISS.from_documents(chunks, embedding_model)
-    db.save_local(INDEX_DIR)
+# ✅ Embed and save the FAISS index
+db = FAISS.from_documents(chunks, embedding_model)
+db.save_local(INDEX_DIR)
 
 # ✅ Create Retriever
 retriever = db.as_retriever()

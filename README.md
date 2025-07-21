@@ -57,7 +57,7 @@ it_help_manual.pdf
 server_issues_guide.pdf"
 The chatbot will automatically process them on startup and build a new FAISS index.
 
-## Try it online:
+## Try it online:https://huggingface.co/spaces/Sandman16/New_joinee_troubles
 This project is hosted on Hugging Face Spaces:
 💡 Example Questions
 - How do I reset my company password?

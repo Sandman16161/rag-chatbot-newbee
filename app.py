@@ -12,22 +12,22 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.callbacks.base import BaseCallbackHandler
 
-# ✅ Load OpenAI API Key securely
+# Load OpenAI API Key securely
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise ValueError("❌ Please set the OPENAI_API_KEY environment variable.")
 
-# ✅ Initialize OpenAI Embedding model
+# Initialize OpenAI Embedding model
 embedding_model = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
-# ✅ Load or Build FAISS Index
+# Load or Build FAISS Index
 INDEX_DIR = "faiss_index"
 if os.path.exists(os.path.join(INDEX_DIR, "index.faiss")):
     db = FAISS.load_local(INDEX_DIR, embedding_model, allow_dangerous_deserialization=True)
 else:
     print("⚠️ FAISS index not found. Creating from PDF...")
 
-# ✅ List your pre-uploaded PDFs
+# List your pre-uploaded PDFs
 datar = ["admin_guide1.pdf", "hr_policies.pdf", "it_help_manual.pdf", "server_issues_guide.pdf"]
 
 docs = []
@@ -36,18 +36,18 @@ for pdf in datar:
     pages = loader.load()
     docs.extend(pages)
 
-# ✅ Chunk the documents
+# Chunk the documents
 splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 chunks = splitter.split_documents(docs)
 
-# ✅ Embed and save the FAISS index
+# Embed and save the FAISS index
 db = FAISS.from_documents(chunks, embedding_model)
 db.save_local(INDEX_DIR)
 
-# ✅ Create Retriever
+# Create Retriever
 retriever = db.as_retriever()
 
-# ✅ Token Streaming Handler
+# Token Streaming Handler
 class StreamHandler(BaseCallbackHandler):
     def __init__(self):
         self.output = ""
@@ -55,7 +55,7 @@ class StreamHandler(BaseCallbackHandler):
     def on_llm_new_token(self, token: str, **kwargs):
         self.output += token
 
-# ✅ Main QA Logic
+# Main QA Logic
 def gradio_streaming_answer(query, chat_history):
     handler = StreamHandler()
     llm = ChatOpenAI(
@@ -94,7 +94,7 @@ def gradio_streaming_answer(query, chat_history):
         yield chat_history, chat_history
         time.sleep(0.1)
 
-# ✅ Gradio UI
+# Gradio UI
 with gr.Blocks() as iface:
     gr.Markdown("## 🧠 RAG Chatbot\nAsk questions specific to HR,Admin,IT, and service issues")
 
